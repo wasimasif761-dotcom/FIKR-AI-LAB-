@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "(FIKR) AI LAB - Micro-Expression Deception Engine",
+  "short_name": "FIKR AI",
+  "description": "Real-Time Micro-Expression & Deception Detection Engine. 100% Client-side biometric analysis by Waseem Asif.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#020617",
+  "theme_color": "#f59e0b",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

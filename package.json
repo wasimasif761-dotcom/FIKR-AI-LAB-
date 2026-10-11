@@ -1,7 +1,10 @@
 {
-  "name": "react-example",
-  "private": true,
-  "version": "0.0.0",
+  "name": "fikr-ai-micro-expression-engine",
+  "version": "1.0.0",
+  "description": "(FIKR) AI LAB - Real-Time Micro-Expression, FACS Action Units & Deception Detection Engine. 100% Client-Side Computer Vision built by Waseem Asif.",
+  "author": "Waseem Asif <wasimasif761@gmail.com>",
+  "license": "MIT",
+  "private": false,
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
