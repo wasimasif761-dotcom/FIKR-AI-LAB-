@@ -1,0 +1,6 @@
+{
+  "name": "Fikr - Next-Gen Software Studio",
+  "description": "(FIKR) AI LAB - Real-Time Micro-Expression & Deception Detection Engine. Zero-cost client-side forensic analysis built by Waseem Asif.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
