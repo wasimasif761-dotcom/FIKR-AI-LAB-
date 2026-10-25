@@ -52,8 +52,8 @@ const DEVELOPER = {
   role: 'Lead AI/ML & Full-Stack Architect',
   email: 'wasimasif761@gmail.com',
   whatsapp: '+966597447275',
-  whatsappUrl: 'https://wa.me/966597447275?text=Hello%20Waseem,%20I%20saw%20your%20FIKR%20AI%20Micro-Expression%20Engine%20on%20GitHub',
-  githubUrl: 'https://github.com/wasimasif761/fikr-ai-micro-expression-engine',
+  whatsappUrl: 'https://wa.me/966597447275?text=Hello%20Waseem,%20I%20saw%20your%20VERITAS%20AI%20Engine%20on%20GitHub',
+  githubUrl: 'https://github.com/wasimasif761-dotcom/FIKR-AI-LAB-',
   experience: 'Specialized in Computer Vision, Forensic Neurological Biomarkers & Low-Latency Client-Side AI'
 };
 
@@ -86,6 +86,7 @@ export default function App() {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showGithubModal, setShowGithubModal] = useState(false);
   const [showApkModal, setShowApkModal] = useState(false);
+  const [showCameraHelpModal, setShowCameraHelpModal] = useState(false);
   const [copiedClone, setCopiedClone] = useState(false);
 
   // PWA Install State
@@ -405,10 +406,22 @@ export default function App() {
     }
   };
 
-  // Start Real Hardware Camera
+  // Start Real Hardware Camera with Graceful Permission & Context Fallbacks
   const startCamera = async () => {
     setCameraError(null);
     try {
+      if (!navigator || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        setCameraError(
+          lang === 'ur'
+            ? 'اس براؤزر میں کیمرہ API تعاون یافتہ نہیں ہے۔ فارنزک سمولیشن فعال ہے۔'
+            : 'Camera API is not supported in this browser context. Forensic Simulation is engaged.'
+        );
+        setIsCameraActive(false);
+        setIsSimulating(true);
+        addLog('warning', 'Camera API unavailable; engaged 60 FPS simulation engine.', 'کیمرہ سپورٹ نہ ہونے پر سمولیشن فعال ہے۔', 'Sensor Fallback');
+        return;
+      }
+
       const constraints: MediaStreamConstraints = {
         video: {
           width: { ideal: 640 },
@@ -418,27 +431,39 @@ export default function App() {
         },
         audio: false
       };
+
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
       streamRef.current = stream;
 
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         videoRef.current.onloadedmetadata = () => {
-          videoRef.current?.play();
+          videoRef.current?.play().catch(() => {});
           setIsCameraActive(true);
           setIsSimulating(false);
+          setCameraError(null);
           addLog('truth', 'Optical camera hardware linked at 640x480 resolution.', 'کیمرہ فیڈ منسلک ہو گئی۔', 'Hardware Video');
           processVideoLoop();
         };
       }
     } catch (err: any) {
-      console.error('Camera error:', err);
-      const errMsg = err.name === 'NotAllowedError'
-        ? 'Camera permission denied. Please enable camera access in your browser.'
-        : err.name === 'NotFoundError'
-        ? 'No camera found on this device.'
-        : 'Failed to access camera: ' + (err.message || 'Unknown error');
-      
+      // Gracefully handle permission denial and missing devices without throwing unhandled exceptions
+      console.warn('Camera access unavailable or permission denied; engaging Simulation Engine.', err?.name);
+
+      const isPermissionDenied =
+        err?.name === 'NotAllowedError' ||
+        err?.name === 'PermissionDeniedError' ||
+        err?.message?.toLowerCase().includes('denied') ||
+        err?.message?.toLowerCase().includes('permission');
+
+      const errMsg = isPermissionDenied
+        ? (lang === 'ur' 
+            ? 'کیمرہ کی اجازت موصول نہیں ہوئی۔ فارنزک سمولیشن موڈ خودکار طور پر فعال ہے تاکہ تمام فیچرز کام کرتے رہیں۔' 
+            : 'Camera permission was denied. Forensic Simulation Mode has been engaged to ensure all analytical features continue seamlessly.')
+        : err?.name === 'NotFoundError'
+        ? (lang === 'ur' ? 'اس ڈیوائس پر کوئی کیمرہ ہارڈویئر نہیں ملا۔' : 'No camera hardware found on this device.')
+        : (lang === 'ur' ? 'کیمرہ شروع نہ ہو سکا۔ سمولیشن موڈ آن ہے۔' : 'Camera could not be initialized. Simulation Mode active.');
+
       setCameraError(errMsg);
       setIsCameraActive(false);
       setIsSimulating(true);
@@ -508,7 +533,7 @@ export default function App() {
 
     ctx.font = 'bold 14px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText('(FIKR) AI LAB FORENSIC EVIDENCE SNAPSHOT', 30, 38);
+    ctx.fillText('VERITAS AI LAB FORENSIC EVIDENCE SNAPSHOT', 30, 38);
 
     ctx.font = '11px "JetBrains Mono", monospace';
     ctx.fillStyle = '#94a3b8';
@@ -516,7 +541,7 @@ export default function App() {
 
     // Download PNG
     const link = document.createElement('a');
-    link.download = `FIKR_Forensic_Evidence_${Date.now()}.png`;
+    link.download = `Veritas_Evidence_${Date.now()}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
 
@@ -696,8 +721,8 @@ export default function App() {
   // Download Forensic Diagnostic JSON
   const exportForensicReport = () => {
     const reportData = {
-      application: '(FIKR) AI LAB - Micro-Expression Forensic Engine',
-      repository: 'https://github.com/wasimasif761/fikr-ai-micro-expression-engine',
+      application: 'VERITAS AI LAB - Real-Time Truth & Micro-Expression Engine',
+      repository: 'https://github.com/wasimasif761-dotcom/FIKR-AI-LAB-',
       developer: DEVELOPER,
       timestamp: new Date().toISOString(),
       sessionSummary: {
@@ -716,14 +741,14 @@ export default function App() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `FIKR_Forensic_Report_${Date.now()}.json`;
+    a.download = `Veritas_Forensic_Report_${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
     addLog('neutral', 'Forensic session report exported to client disk.', 'فارنزک رپورٹ فائل ڈاؤن لوڈ کر لی گئی۔', 'System Export');
   };
 
   const copyCloneCommand = () => {
-    navigator.clipboard.writeText('git clone https://github.com/wasimasif761/fikr-ai-micro-expression-engine.git');
+    navigator.clipboard.writeText('git clone https://github.com/wasimasif761-dotcom/FIKR-AI-LAB-.git');
     setCopiedClone(true);
     setTimeout(() => setCopiedClone(false), 2500);
   };
@@ -744,13 +769,13 @@ export default function App() {
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="font-black text-base sm:text-lg tracking-tight text-white">(FIKR) AI LAB</span>
-                    <span className="text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                      PRODUCTION V2.4
+                    <span className="font-black text-base sm:text-lg tracking-tight text-white">VERITAS AI LAB</span>
+                    <span className="text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                      ENTERPRISE V3.0
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-400 hidden sm:block">
-                    Real-Time Micro-Expression, FACS Action Units & Deception Detection Engine
+                    Real-Time Micro-Expression, FACS Action Units & Truth Verification Engine
                   </p>
                 </div>
               </div>
@@ -920,19 +945,45 @@ export default function App() {
           </div>
         </div>
 
-        {/* Camera Permission Alert */}
+        {/* Camera Permission Alert & Simulation Fallback Banner */}
         {cameraError && (
-          <div className="mb-5 p-3.5 rounded-2xl bg-rose-950/40 border border-rose-800/80 text-rose-200 text-xs flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
-              <span>{cameraError}</span>
+          <div className="mb-5 p-4 rounded-2xl bg-amber-950/30 border border-amber-500/40 text-amber-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg">
+            <div className="flex items-start gap-2.5">
+              <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold text-white block mb-0.5">
+                  {lang === 'ur' ? 'کیمرہ کی اجازت موصول نہیں ہوئی (Forensic Simulation Active)' : 'Camera Access Notice (Simulation Engaged)'}
+                </span>
+                <span className="text-slate-300 text-[11px] leading-relaxed">
+                  {cameraError}
+                </span>
+              </div>
             </div>
-            <button
-              onClick={() => { setCameraError(null); startCamera(); }}
-              className="px-2.5 py-1 rounded-lg bg-rose-800 hover:bg-rose-700 text-white font-bold text-[11px] shrink-0"
-            >
-              Retry Camera
-            </button>
+
+            <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+              <button
+                onClick={() => setShowCameraHelpModal(true)}
+                className="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-[11px] font-semibold transition-all flex items-center gap-1"
+              >
+                <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
+                <span>{lang === 'ur' ? 'اجازت کیسے دیں؟' : 'Permission Guide'}</span>
+              </button>
+
+              <button
+                onClick={() => { setCameraError(null); startCamera(); }}
+                className="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] transition-all"
+              >
+                {lang === 'ur' ? 'دوبارہ کوشش' : 'Retry'}
+              </button>
+
+              <button
+                onClick={() => setCameraError(null)}
+                className="px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-[11px] transition-all"
+                title="Dismiss"
+              >
+                ✕
+              </button>
+            </div>
           </div>
         )}
 
@@ -1619,7 +1670,7 @@ export default function App() {
             <div className="bg-slate-950 p-3 rounded-2xl border border-slate-800 mb-4">
               <div className="text-[10px] text-slate-500 font-mono mb-1.5">GIT CLONE COMMAND:</div>
               <div className="flex items-center justify-between gap-2 text-xs font-mono text-emerald-400">
-                <span className="truncate">git clone https://github.com/wasimasif761/fikr-ai-micro-expression-engine.git</span>
+                <span className="truncate">git clone https://github.com/wasimasif761-dotcom/FIKR-AI-LAB-.git</span>
                 <button
                   onClick={copyCloneCommand}
                   className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white shrink-0"
@@ -1800,6 +1851,81 @@ export default function App() {
                 className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-center text-xs transition-all cursor-pointer"
               >
                 سمجھ آگیا (Got it)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 5: CAMERA PERMISSION STEP-BY-STEP HELP */}
+      {showCameraHelpModal && (
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+            <button
+              onClick={() => setShowCameraHelpModal(false)}
+              className="absolute top-4 right-4 p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-slate-950 font-black shadow-lg">
+                <Camera className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-black text-white">
+                  {lang === 'ur' ? 'کیمرہ کی اجازت کیسے دیں؟' : 'How to Allow Camera Permission'}
+                </h3>
+                <p className="text-xs text-amber-400 font-mono">Chrome / Android & Desktop Guide</p>
+              </div>
+            </div>
+
+            <div className="space-y-4 text-xs">
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+                <div className="font-bold text-amber-400 flex items-center gap-1.5">
+                  <Smartphone className="w-4 h-4" />
+                  <span>{lang === 'ur' ? 'اینڈرائڈ موبائل (Android / Chrome) پر:' : 'On Android Mobile (Chrome):'}</span>
+                </div>
+                <ol className="list-decimal list-inside space-y-1.5 text-slate-300 font-sans text-[11px] leading-relaxed">
+                  <li>براؤزر کے اوپر والے ایڈریس بار میں <strong className="text-white">لاک 🔒 یا ٹیون ⚙️ آئیکن</strong> پر ٹیپ کریں۔</li>
+                  <li>مینو سے <strong className="text-emerald-400">Permissions (اجازتیں)</strong> پر کلک کریں۔</li>
+                  <li><strong className="text-emerald-400">Camera</strong> کو <strong className="text-emerald-400">Allow (اجازت دیں)</strong> پر سیٹ کریں۔</li>
+                  <li>پیج ریفریش کریں اور "Start Camera" دبائیں۔</li>
+                </ol>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+                <div className="font-bold text-cyan-400 flex items-center gap-1.5">
+                  <Eye className="w-4 h-4" />
+                  <span>{lang === 'ur' ? 'کمپیوٹر یا لیپ ٹاپ (PC / Chrome) پر:' : 'On Desktop (Chrome / Edge):'}</span>
+                </div>
+                <ol className="list-decimal list-inside space-y-1.5 text-slate-300 font-sans text-[11px] leading-relaxed">
+                  <li>یو آر ایل بار میں بائیں طرف <strong className="text-white">View site information (سلائیڈرز/لاک آئیکن)</strong> پر کلک کریں۔</li>
+                  <li><strong className="text-cyan-400">Camera</strong> ٹوگل کو <strong className="text-cyan-400">On</strong> کریں۔</li>
+                  <li>پیج ریلوڈ کر کے کیمرہ شروع کریں۔</li>
+                </ol>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-emerald-300 text-[11px]">
+                💡 <strong>نوٹ:</strong> اگر آپ کے پاس کیمرہ نہ ہو یا آپ اجازت نہ دینا چاہیں تو بھی کوئی پریشانی نہیں ہے! ایپ کا <strong>Forensic Simulation Engine</strong> تمام 468 فیشل پوائنٹس اور تجزیہ لائیو چلاتا رہتا ہے۔
+              </div>
+            </div>
+
+            <div className="mt-6 flex gap-3">
+              <button
+                onClick={() => {
+                  setShowCameraHelpModal(false);
+                  startCamera();
+                }}
+                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 text-slate-950 font-bold text-xs"
+              >
+                {lang === 'ur' ? 'کیمرہ دوبارہ آزمائیں (Retry)' : 'Retry Camera'}
+              </button>
+              <button
+                onClick={() => setShowCameraHelpModal(false)}
+                className="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs"
+              >
+                {lang === 'ur' ? 'سمولیشن کے ساتھ جاری رکھیں' : 'Continue Simulation'}
               </button>
             </div>
           </div>

@@ -1,4 +1,4 @@
-name: Deploy FIKR AI to GitHub Pages
+name: Deploy VERITAS AI LAB to GitHub Pages
 
 on:
   push:

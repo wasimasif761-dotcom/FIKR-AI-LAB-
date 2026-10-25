@@ -1,26 +1,27 @@
-# (FIKR) AI LAB — Real-Time Micro-Expression & Deception Detection Engine
-### ریئل ٹائم مائکرو-ایکسپریشن اور اعصابی فریب کی تشخیصی لیبارٹری
+# VERITAS AI LAB — Real-Time Truth & Micro-Expression Engine
+### ویریتاس اے آئی — اعصابی مائیکرو ایکسپریشن اور صداقت شناسی کا نظام
 
 [![MIT License](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
 [![Runtime](https://img.shields.io/badge/Runtime-100%25%20Client--Side-amber.svg)](#core-architecture)
 [![Cost](https://img.shields.io/badge/Cloud%20Cost-%240%20(Zero%20APIs)-cyan.svg)](#cost-and-infrastructure)
 [![FaceMesh](https://img.shields.io/badge/MediaPipe-468%20Landmarks-rose.svg)](https://developers.google.com/mediapipe)
 [![Framework](https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite%20%2B%20TailwindCSS-violet.svg)](#tech-stack)
+[![PWA Ready](https://img.shields.io/badge/PWA-Installable%20Android%20%26%20iOS-blue.svg)](#mobile-pwa-installation)
 
 ---
 
 ## 👨‍💻 Lead Developer & System Architect
 * **Lead Architect:** **Waseem Asif**
 * **Official Email:** [wasimasif761@gmail.com](mailto:wasimasif761@gmail.com)
-* **Direct WhatsApp:** [+966597447275](https://wa.me/966597447275?text=Hello%20Waseem,%20I%20saw%20your%20FIKR%20AI%20Micro-Expression%20Engine%20on%20GitHub)
+* **Direct WhatsApp:** [+966597447275](https://wa.me/966597447275?text=Hello%20Waseem,%20I%20saw%20your%20VERITAS%20AI%20Engine%20on%20GitHub)
 * **Domain:** Computer Vision, Behavioral Forensic AI, Low-Latency Web Biometrics
 
 ---
 
 ## 🎯 Overview (پروجیکٹ کا تعارف)
-**(FIKR) AI LAB** is a high-precision, production-grade forensic tool engineered to detect involuntary human micro-expressions, facial action units (FACS), micro-saccadic eye jitters, and asymmetric smirk micro-flinches in real time directly inside the browser.
+**VERITAS AI LAB** is an enterprise-grade forensic biometric tool engineered to detect involuntary human micro-expressions, facial action units (FACS), micro-saccadic eye jitters, and asymmetric smirk micro-flinches in real time directly inside any modern web browser or mobile phone.
 
-Unlike commercial polygraph systems or server-side video surveillance solutions, **FIKR runs 100% on the user's local hardware** using client-side mathematical computer vision algorithms. No video frames, audio, or biometric telemetry leave the device.
+Unlike commercial polygraph systems or server-side video surveillance solutions, **Veritas AI runs 100% on the user's local hardware** using client-side mathematical computer vision algorithms. No video frames, audio, or biometric telemetry ever leave the device.
 
 ---
 
@@ -38,6 +39,7 @@ Unlike commercial polygraph systems or server-side video surveillance solutions,
 5. **Session Forensic Audit Trail & Export:** Millisecond-timestamped audit logging with instant JSON/PDF forensic report export.
 6. **Snapshot Evidence Capturing:** Single-click camera frame snapshot with forensic overlay and timestamp watermarking.
 7. **Audio Alert Synthesizer:** Real-time synthesized acoustic beep warning when deception likelihood spikes past alert thresholds.
+8. **1-Tap Mobile PWA Installation:** Installable on Android (Oppo, Samsung, Xiaomi) and iOS as a standalone native-like application.
 
 ---
 
@@ -81,13 +83,13 @@ Unlike commercial polygraph systems or server-side video surveillance solutions,
 ### Installation
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/fikr-ai-micro-expression-engine.git
+git clone https://github.com/wasimasif761-dotcom/FIKR-AI-LAB-.git
 
 # 2. Navigate to project directory
-cd fikr-ai-micro-expression-engine
+cd FIKR-AI-LAB-
 
 # 3. Install dependencies
-npm install
+npm install --legacy-peer-deps
 
 # 4. Start local development server
 npm run dev
@@ -106,19 +108,10 @@ npm run preview
 
 ---
 
-## 📁 Repository Structure
-```
-├── index.html              # HTML entry point with MediaPipe CDN scripts & SEO meta
-├── package.json            # Scripts, dependencies, and author metadata
-├── tsconfig.json           # TypeScript configuration
-├── vite.config.ts          # Vite configuration with Tailwind CSS plugin
-├── LICENSE                 # MIT License (Waseem Asif)
-├── README.md               # Scientific & operational documentation
-└── src/
-    ├── main.tsx            # React root mount
-    ├── index.css           # Global Tailwind CSS imports & styles
-    └── App.tsx             # Complete forensic engine, biometrics, & dashboard UI
-```
+## 📱 Mobile PWA Installation (Oppo, Samsung, Xiaomi)
+1. Open the live URL in **Google Chrome** on your mobile phone.
+2. Tap the **"انسٹال کریں (Install App)"** button in the header, or tap the **3 dots (⋮)** in Chrome and select **"Install app"** / **"Add to Home screen"**.
+3. The app will install onto your phone's home screen with its own native launcher icon and open full-screen like a native Android APK!
 
 ---
 

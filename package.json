@@ -1,7 +1,7 @@
 {
-  "name": "fikr-ai-micro-expression-engine",
+  "name": "veritas-ai-forensic-engine",
   "version": "1.0.0",
-  "description": "(FIKR) AI LAB - Real-Time Micro-Expression, FACS Action Units & Deception Detection Engine. 100% Client-Side Computer Vision built by Waseem Asif.",
+  "description": "VERITAS AI LAB - Real-Time Truth & Micro-Expression Engine. Production-grade client-side computer vision biometrics by Waseem Asif.",
   "author": "Waseem Asif <wasimasif761@gmail.com>",
   "license": "MIT",
   "private": false,

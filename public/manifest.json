@@ -1,15 +1,34 @@
 {
   "id": "/",
-  "name": "(FIKR) AI LAB - Micro-Expression Deception Engine",
-  "short_name": "FIKR AI",
-  "description": "Real-Time Micro-Expression & Deception Detection Engine. 100% Client-side biometric analysis by Waseem Asif.",
+  "name": "VERITAS AI LAB - Real-Time Truth & Micro-Expression Engine",
+  "short_name": "Veritas AI",
+  "description": "Enterprise-Grade Real-Time Micro-Expression, FACS Action Units & Deception Analysis Engine by Waseem Asif.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#020617",
   "theme_color": "#f59e0b",
+  "categories": ["utilities", "business", "security"],
   "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "/icon.svg",
       "sizes": "192x192 512x512",
